@@ -1,0 +1,340 @@
+/* Global Styles */
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Default Light Mode */
+body {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease-in-out;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* Dark Mode - Apply to Entire Page */
+.dark-mode {
+    background-color: #1e1e1e !important;
+    color: white !important;
+}
+
+.dark-mode .navbar {
+    background-color: #242424 !important;
+    color: white !important;
+}
+
+.dark-mode .footer {
+    background-color: #242424 !important;
+    color: white !important;
+}
+
+.dark-mode .sidebar {
+    background-color: #242424 !important;
+}
+
+.dark-mode .nav-link {
+    color: #ffffff !important;
+}
+
+.dark-mode .nav-link:hover {
+    background-color: #3a3a3a !important;
+}
+
+.dark-mode .btn-home i, 
+.dark-mode .btn-setting i, 
+.dark-mode .btn-logout {
+    color: white !important;
+}
+
+/* Content Dark Mode */
+.dark-mode .content {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+/* Table Dark Mode */
+.dark-mode .table {
+    background-color: #2b2b2b;
+    color: white;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Neon cyan glow */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Table Dark Mode */
+.dark-mode .card {
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Neon cyan glow */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Table Header and Cell Styling */
+.dark-mode .table th,
+.dark-mode .table td {
+    border-color: #3a3a3a;
+    padding: 10px;
+}
+
+/* Optional: Different Glow Colors */
+.dark-mode .table.glow-blue {
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.7); /* Blue Glow */
+}
+
+.dark-mode .table.glow-green {
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); /* Green Glow */
+}
+
+#darkModeContainer {
+    bottom: 50px !important; /* Moves it higher from the bottom */
+    right: 25px;
+    z-index: 1050;
+}
+
+#darkModeToggle {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+#darkModeToggle:hover {
+    transform: scale(1.1) rotate(10deg); /* Slight rotation and scaling */
+    background-color: #222; /* Slightly darker shade */
+    box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.5); /* Soft glow effect */
+}
+
+/* Glow effect */
+#darkModeToggle::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Activate glow effect on hover */
+#darkModeToggle:hover::before {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+#adminButton {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+    border: 1px solid #fff;
+}
+
+#adminButton:hover {
+    /* transform: scale(1.1) rotate(10deg); */
+    transform: scale(1.1);
+    background-color: #222; /* Slightly darker shade */
+    box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.5); /* Soft glow effect */
+}
+
+#adminButton::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#adminButton:hover::before {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 8px;
+}
+
+/* Navbar shifts when sidebar expands */
+.sidebar.expanded ~ .navbar {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+}
+
+/* Navbar stays full-width when sidebar is collapsed */
+.sidebar.collapsed ~ .navbar {
+    width: 100%;
+    margin-left: 0;
+}
+
+/* Sidebar - Default Collapsed */
+.sidebar {
+    width: 0;
+    height: 100vh;
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.3s ease-in-out;
+    overflow-x: hidden;
+    z-index: 1000;
+    padding: 0; /* Default hidden */
+}
+
+.sidebar .navbar-brand {
+    padding-top: 10px;
+    padding-bottom: 10px    ;
+    font-size: 18px;
+    text-align: center;
+    display: block;
+    color: #ffffff;
+    border-bottom: 1px solid #495057;
+}
+
+/* Sidebar expanded */
+.sidebar.expanded {
+    width: 250px;
+    padding: 10px;
+}
+
+/* Hide sidebar content when collapsed */
+.sidebar.collapsed .navbar-brand,
+.sidebar.collapsed .nav-link {
+    display: none;
+}
+
+/* Content Area - Default Full Width */
+.content {
+    margin-left: 0;
+    margin-top: 70px;
+    padding: 10px 20px 40px 20px;
+    transition: all 0.3s ease-in-out;
+    flex-grow: 1;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Content shifts when sidebar expands */
+.sidebar.expanded + .content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+/* Table adjustment */
+.table {
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.sidebar.expanded + .content .table {
+    width: calc(100% - 250px);
+}
+
+/* Navbar Hover Effect */
+.nav-link {
+    color: #ffffff;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.nav-link i {
+    margin-right: 10px;
+}
+
+.nav-link:hover {
+    background-color: #495057;
+    padding-left: 22px;
+    color: #ffffff;
+}
+
+.navbar.expanded {
+    width: 100%;
+}
+
+.nav {
+    padding-top: 20px;
+}
+
+.btn-home, .btn-setting, .btn-logout {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    font-size: 18px;
+    border-radius: 50%;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: transparent;
+    transform: scale(1.08);
+}
+
+.btn-home i, .btn-setting i {
+    color: #343a40;
+    font-size: 1.3rem;
+}
+
+#navbarText {
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    transform: translateX(-10px);
+    font-size: 18px;
+}
+
+.navbar a {
+    text-decoration: none !important;
+    font-size: 16px;
+}
+
+#toggleSidebar {
+    border: 1px solid #fff;
+}
+
+#darkModeToggle {
+    border: 1px solid #fff;
+}
+
+/* Footer Styling */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #343a40; /* Dark gray */
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode Footer */
+.dark-mode .footer {
+    background-color: #242424;
+    color: #ffffff;
+}

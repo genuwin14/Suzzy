@@ -1,0 +1,50 @@
+/* Mobile responsiveness for login page */
+@media (max-width: 768px) {
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 10px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 350px;
+        /* padding: 15px; */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        font-size: 1rem;
+        text-align: center;
+        /* padding: 10px; */
+    }
+
+    /* .card-body {
+        padding: 1.5rem;
+    } */
+
+    .text-label {
+        font-size: 1.2rem;
+    }
+
+    .form-control {
+        font-size: 0.9rem;
+    }
+
+    .input-group-text {
+        font-size: 1rem;
+        /* padding: 8px; */
+    }
+
+    .btn {
+        font-size: 1rem;
+        /* padding: 10px; */
+    }
+
+    .toast {
+        width: 90%;
+        max-width: 300px;
+    }
+}

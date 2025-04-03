@@ -1,0 +1,44 @@
+.table th, .table td {
+    text-align: center;
+}
+.col-date { width: 5%; }
+.col-name { width: 25%; }
+.col-lab { width: 10%; }
+.col-details { width: 15%; }
+.col-time { width: 10%; }
+
+.dataTables_filter {
+    display: flex;
+    align-items: center;
+}
+
+.dataTables_filter label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.dataTables_filter input {
+    width: 250px;
+    padding: 6px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    margin-left: 15px;
+}
+
+.dataTables_filter input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.d-flex.gap-2 {
+    display: flex;
+    gap: 10px;
+}
+input[type="date"] {
+    width: 180px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}

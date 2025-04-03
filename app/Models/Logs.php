@@ -14,6 +14,8 @@ class Logs extends Model
 
     protected $fillable = [
         'faculty_id',
+        'key_id',
+        'details',
         'date_time_borrowed',
         'date_time_returned',
     ];
@@ -21,5 +23,10 @@ class Logs extends Model
     public function faculty()
     {
         return $this->belongsTo(Faculty::class, 'faculty_id', 'faculty_id');
+    }
+
+    public function labKey()
+    {
+        return $this->belongsTo(LabKey::class, 'key_id', 'key_id');
     }
 }

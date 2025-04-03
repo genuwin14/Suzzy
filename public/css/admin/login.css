@@ -1,0 +1,64 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    font-weight: 600;
+    color: #fcb315;
+    font-size: 1.25rem;
+}
+
+.card-header i {
+    font-size: 1.4rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.text-label {
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-check-label {
+    font-size: 0.9rem;
+}
+
+.form-check-input {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.card-body .form-label {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* Style for the password field's input group */
+.input-group-text {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 0 8px 8px 0;
+}
+
+.input-group-text i {
+    color: #495057;
+    font-size: 1.2rem;
+}
+
+.is-invalid {
+    border-color: red !important;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.7) !important;
+}

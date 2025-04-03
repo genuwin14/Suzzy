@@ -21,7 +21,9 @@ class Faculty extends Model
         'mname',
         'lname',
         'suffix',
-    ];
+        'admin_id',  // Added field
+        'status',    // Added field
+    ];    
 
     public function logs()
     {

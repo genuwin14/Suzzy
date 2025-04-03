@@ -1,0 +1,59 @@
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    /* Sidebar expanded on mobile */
+    .sidebar.expanded {
+        width: 250px;
+        position: fixed;
+        z-index: 1050;
+        left: 0;
+        top: 0;
+        height: 100%;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* When sidebar expands, shift content */
+    .sidebar.expanded + .content {
+        margin-left: 250px; /* Content moves but stays visible */
+        width: calc(100% - 250px);
+        transition: margin-left 0.3s ease-in-out;
+    }
+
+    /* When sidebar is collapsed, content takes full width */
+    .sidebar.collapsed + .content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* Ensure navbar remains unaffected */
+    .navbar {
+        width: 100%;
+        z-index: 1100;
+        position: fixed; /* Keeps navbar fixed on top */
+    }
+
+    .table-container {
+        overflow-x: auto;
+        width: 100%;
+        display: block;
+    }
+
+    /* .table {
+        width: 100%;
+        min-width: 600px;
+        white-space: nowrap;
+    } */
+
+    .table th {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .table td {
+        font-size: 13px;
+        padding: 8px;
+    }
+    
+    .dark-mode .table-container {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+}
