@@ -45,7 +45,7 @@
     </div>
 
     <div class="card" style="max-width: 400px; width: 100%;">
-        <div class="card-header bg-dark text-start">
+        <div class="card-header text-start" style="background-color: #001f3f;">
             <i class="fas fa-key me-2"></i>Key Cab
         </div>
         <div class="card-body">
@@ -70,7 +70,7 @@
                         </span>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-dark w-100">Login</button>
+                <button type="submit" class="btn text-white w-100" style="background-color: #001f3f;">Login</button>
             </form>
         </div>
     </div>

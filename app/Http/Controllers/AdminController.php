@@ -196,6 +196,15 @@ class AdminController extends Controller
         // Retrieve logs with related faculty and key information
         $logs = Logs::with(['faculty', 'labKey'])->orderBy('date_time_borrowed', 'desc')->get();
 
-        return view('admin.logs', compact('logs'));
+        // Extract unique borrower names
+        $borrowerNames = $logs->map(function ($log) {
+            if ($log->faculty) {
+                return trim($log->faculty->fname . ' ' . $log->faculty->mname . ' ' . $log->faculty->lname . ' ' . $log->faculty->suffix);
+            }
+            return 'Unknown Borrower';
+        })->unique()->sort()->values();
+
+        // Pass both logs and borrowerNames to the view
+        return view('admin.logs', compact('logs', 'borrowerNames'));
     }
 }

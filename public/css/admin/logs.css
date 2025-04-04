@@ -1,30 +1,72 @@
-.table th, .table td {
+.table th,
+.table td {
     text-align: center;
+    white-space: nowrap; /* Prevent text from wrapping */
 }
+
+/* Column widths are preserved */
 .col-date { width: 5%; }
 .col-name { width: 25%; }
 .col-lab { width: 10%; }
 .col-details { width: 15%; }
 .col-time { width: 10%; }
 
+/* Prevent table and header shrinkage */
+#logsTable {
+    width: auto; /* Let it size based on content */
+    min-width: 100%; /* Ensure it doesn't collapse */
+    table-layout: auto; /* Allow flexible column sizing */
+}
+
+/* Ensure <thead> stays aligned and doesn't shrink */
+#logsTable thead th {
+    white-space: nowrap;
+}
+
+/* Table container styling */
+.table-container {
+    max-height: 630px; /* Set a height limit for the scrolling */
+    overflow: auto; /* Allow both vertical and horizontal scrolling */
+}
+
+/* Make the table scroll horizontally and vertically */
+.logs-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Optional: Style scrollbars on desktop */
+.logs-table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.logs-table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+/* DataTables search box styling */
 .dataTables_filter {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .dataTables_filter label {
     font-weight: bold;
     margin-right: 10px;
+    flex-shrink: 0;
 }
 
 .dataTables_filter input {
-    width: 250px;
+    width: 100%;
     padding: 6px 12px;
     border: 1px solid #ced4da;
     border-radius: 5px;
     outline: none;
     transition: all 0.3s ease-in-out;
     margin-left: 15px;
+    flex: 1;
 }
 
 .dataTables_filter input:focus {
@@ -35,10 +77,73 @@
 .d-flex.gap-2 {
     display: flex;
     gap: 10px;
+    position: relative;
+    overflow: visible;
+    flex-wrap: wrap;
+    width: 100%;
 }
-input[type="date"] {
-    width: 180px;
+
+input[type="date"],
+input[type="time"],
+#printButton,
+#resetButton {
+    width: 100%;
+    max-width: 200px;
+    min-width: 150px;
+    flex: 1;
     padding: 6px;
     border-radius: 5px;
     border: 1px solid #ced4da;
+}
+
+.dataTables_filter input {
+    margin-left: 0 !important; /* Remove left margin */
+}
+
+#filterName {
+    position: relative;
+    z-index: 10;
+}
+
+.table-responsive {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.container-fluid {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#searchContainer {
+    flex: 1;
+    min-width: 250px;
+    max-width: 100%;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+    #printButton,
+    #filterDate,
+    #filterTime,
+    #resetButton,
+    .dataTables_filter input {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    .d-flex.align-items-center.gap-2 {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dataTables_filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .table th,
+    .table td {
+        font-size: 12px;
+    }
 }

@@ -6,6 +6,8 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between mb-2">
         <h2>Faculty List</h2>
+        <!-- Search Bar -->
+        <input type="text" id="search-bar" class="form-control" placeholder="Search Faculty..." style="width: 250px;">
     </div>
 
     <table class="table table-bordered table-striped">
@@ -16,7 +18,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="faculty-table-body">
             @forelse ($faculty as $member)
             <tr>
                 <td>{{ $member->faculty_id }}</td>
@@ -49,6 +51,25 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        // Search Bar functionality
+        const searchBar = document.getElementById("search-bar");
+        searchBar.addEventListener("input", function() {
+            let searchValue = searchBar.value.toLowerCase();
+            let rows = document.querySelectorAll("#faculty-table-body tr");
+
+            rows.forEach(function(row) {
+                let columns = row.getElementsByTagName("td");
+                let name = columns[1].textContent.toLowerCase(); // Name column
+                let facultyId = columns[0].textContent.toLowerCase(); // Faculty ID column
+
+                if (name.includes(searchValue) || facultyId.includes(searchValue)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+
         document.querySelectorAll(".toggle-status-btn").forEach(button => {
             button.addEventListener("click", function() {
                 let facultyId = this.getAttribute("data-faculty-id");
@@ -90,12 +111,16 @@
                 title: "Success!",
                 text: @json(session('success')),
                 icon: "success",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
                 confirmButtonColor: "#28a745",
                 customClass: {
                     popup: 'custom-swal-popup',
                     title: 'custom-swal-title',
                     content: 'custom-swal-content',
-                    confirmButton: 'custom-swal-confirm-button'
+                    confirmButton: 'custom-swal-confirm-button',
+                    timerProgressBar: 'custom-timer-progress-bar' // Custom class for progress bar
                 }
             });
         @endif
@@ -139,27 +164,20 @@
         padding: 10px 20px;
     }
 
-    /* Responsive adjustments for mobile screens */
-    @media (max-width: 600px) {
-        .custom-swal-popup {
-            width: 90%; /* Adjust width for small screens */
-            font-size: 14px;
-            padding: 10px;
-        }
+    /* Custom progress bar color */
+    .custom-timer-progress-bar {
+        background-color: #28a745 !important; /* Green color */
+    }
 
-        .custom-swal-title {
-            font-size: 18px;
-        }
+    /* Optional: You can customize other aspects of the progress bar as well */
+    .swal2-timer-progress-bar {
+        height: 4px; /* Adjust height if needed */
+        background-color: #28a745 !important; /* Green color */
+    }
 
-        .custom-swal-content {
-            font-size: 14px;
-        }
-
-        .custom-swal-confirm-button,
-        .custom-swal-cancel-button {
-            font-size: 12px;
-            padding: 8px 15px;
-        }
+    /* Optional: Search bar styling */
+    #search-bar {
+        margin-right: 20px;
     }
 </style>
 

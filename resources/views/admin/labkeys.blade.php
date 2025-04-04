@@ -13,12 +13,13 @@
     }
 
     .key-card {
-        width: 200px;
+        width: 250px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s, box-shadow 0.2s;
         background: white;
         cursor: pointer;
+        font-size: 1.2rem;
     }
 
     .key-card:hover {
@@ -100,7 +101,7 @@
 <div class="modal fade" id="keyModal" tabindex="-1" aria-labelledby="keyModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
+            <div class="modal-header text-white" style="background-color: #001f3f;">
                 <h5 class="modal-title" id="keyModalLabel">Key Details - <span id="modalLaboratory"></span></h5>
                 <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
@@ -111,7 +112,7 @@
                 <p><strong>Borrowed By:</strong> <span id="modalFaculty"></span></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn text-white" style="background-color: #001f3f;" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

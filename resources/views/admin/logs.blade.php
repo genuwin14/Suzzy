@@ -12,9 +12,9 @@
 <div class="container-fluid">
     <h2>Logs</h2>
 
-    <div class="table-responsive">
+    <div class="table-responsive logs-table-wrapper">
         <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 mb-2">
                 <button id="printButton" class="btn btn-dark">
                     <i class="fa-regular fa-file-pdf"></i> Generate PDF
                 </button>
@@ -22,47 +22,48 @@
                 <input type="time" id="filterTime" class="form-control" style="width: 120px;">
                 <button id="resetButton" class="btn btn-dark">Clear</button>
             </div>
-            <!-- DataTable Search Input will be moved here dynamically -->
             <div id="searchContainer"></div>
         </div>
-
-        <table id="logsTable" class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th class="col-date">DATE</th>
-                    <th class="col-name">BORROWER'S NAME</th>
-                    <th class="col-lab">LABORATORY</th>
-                    <th class="col-details">DETAILS (LAB/TV)</th>
-                    <th class="col-time">TIME BORROWED</th>
-                    <th class="col-time">TIME RETURNED</th>
-                    <th class="col-sig">Signature</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($logs as $log)
-                <tr>
-                    <td>{{ \Carbon\Carbon::parse($log->date_time_borrowed)->format('M d, Y') }}</td>
-                    <td>
-                        @if ($log->faculty)
-                            {{ $log->faculty->fname }} {{ $log->faculty->mname }} {{ $log->faculty->lname }} {{ $log->faculty->suffix }}
-                        @else
-                            Unknown Borrower
-                        @endif
-                    </td>
-                    <td>{{ $log->labKey ? $log->labKey->laboratory : 'No Laboratory Assigned' }}</td>
-                    <td>{{ $log->details ?? 'No Details' }}</td>
-                    <td>{{ \Carbon\Carbon::parse($log->date_time_borrowed)->format('h:i A') }}</td>
-                    <td>{{ $log->date_time_returned ? \Carbon\Carbon::parse($log->date_time_returned)->format('h:i A') : 'N/A' }}</td>
-                    <td></td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="7" class="text-center">No access logs record yet.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+        
+        <div class="table-container">
+            <table id="logsTable" class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col-date">DATE</th>
+                        <th class="col-name">BORROWER'S NAME</th>
+                        <th class="col-lab">LABORATORY</th>
+                        <th class="col-details">DETAILS (LAB/TV)</th>
+                        <th class="col-time">TIME BORROWED</th>
+                        <th class="col-time">TIME RETURNED</th>
+                        <th class="col-sig">Signature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($logs as $log)
+                    <tr>
+                        <td>{{ \Carbon\Carbon::parse($log->date_time_borrowed)->format('M d, Y') }}</td>
+                        <td>
+                            @if ($log->faculty)
+                                {{ $log->faculty->fname }} {{ $log->faculty->mname }} {{ $log->faculty->lname }} {{ $log->faculty->suffix }}
+                            @else
+                                Unknown Borrower
+                            @endif
+                        </td>
+                        <td>{{ $log->labKey ? $log->labKey->laboratory : 'No Laboratory Assigned' }}</td>
+                        <td>{{ $log->details ?? 'No Details' }}</td>
+                        <td>{{ \Carbon\Carbon::parse($log->date_time_borrowed)->format('h:i A') }}</td>
+                        <td>{{ $log->date_time_returned ? \Carbon\Carbon::parse($log->date_time_returned)->format('h:i A') : 'N/A' }}</td>
+                        <td></td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="7" class="text-center">No access logs record yet.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>  
 </div>
 
 <!-- JavaScript for PDF Export -->
@@ -89,7 +90,8 @@
             scrollCollapse: true,
             lengthChange: false,
             language: {
-                search: "🔎 Search:",
+                search: "", // remove the "Search:" label
+                searchPlaceholder: "🔍 Search logs...",
                 zeroRecords: "No matching records found",
                 emptyTable: "No access logs record yet."
             }

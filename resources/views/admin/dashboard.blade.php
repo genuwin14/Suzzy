@@ -44,7 +44,7 @@
         <!-- Three Small Cards on the Right -->
         <div class="col-md-4 mb-4">
             <!-- Faculty Registered -->
-            <div class="card small-card bg-dark text-white">
+            <div class="card small-card text-white">
                 <div class="card-body">
                     <h5 class="card-title">
                         <i class="fa-solid fa-user-graduate icon"></i> Faculty Registered
@@ -55,10 +55,10 @@
             </div>
 
             <!-- Recently Borrowed -->
-            <div class="card small-card bg-dark text-white">
+            <div class="card small-card text-white">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <i class="fa-solid fa-door-closed icon"></i> Faculty Borrowed
+                        <i class="fa-solid fa-door-closed icon"></i> Faculty Recently Borrowed
                     </h5>
                     <ul class="recent-list">
                         @forelse ($recentFacultyBorrowed as $log)
@@ -75,7 +75,7 @@
             </div>
 
             <!-- Borrowed Keys with Laboratory -->
-            <div class="card small-card bg-dark text-white">
+            <div class="card small-card text-white">
                 <div class="card-body">
                     <h5 class="card-title">
                         <i class="fa-solid fa-key icon"></i> Borrowed Keys
@@ -86,6 +86,9 @@
                                 <i class="fa-solid fa-door-open"></i> 
                                 {{ $log->labKey ? $log->labKey->laboratory : 'Unknown Lab' }} 
                                 ({{ $log->faculty ? $log->faculty->fname . ' ' . $log->faculty->lname : 'Unknown Faculty' }})
+                                - <span class="status">
+                                    {{ $log->date_time_returned ? 'Returned' : 'Borrowed' }}
+                                </span>
                             </li>
                         @empty
                             <li>No borrowed keys</li>

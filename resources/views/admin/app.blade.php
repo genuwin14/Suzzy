@@ -29,7 +29,7 @@
         }
     </script>
 </head>
-<body class="bg-light text-dark">   
+<body class="text-dark">   
 
     @include('sidebar.sidebar')
     @include('navbar.navbar')
@@ -43,9 +43,9 @@
     
     <div id="darkmodeContainer" class="position-fixed bottom-0 end-0 p-3">
         <!-- Admin Button -->
-        <button id="adminButton" class="btn btn-dark text-white btn-outline-dark mx-2 mb-2">
+        <!-- <button id="adminButton" class="btn btn-dark text-white btn-outline-dark mx-2 mb-2">
             <i class="fas fa-user-shield"></i>
-        </button>
+        </button> -->
         
         <!-- Dark Mode Toggle Button -->
         <button id="darkModeToggle" class="btn btn-dark text-white btn-outline-dark mx-2">
