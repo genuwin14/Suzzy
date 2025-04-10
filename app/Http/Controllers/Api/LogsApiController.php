@@ -17,14 +17,14 @@ class LogsApiController extends Controller
 
     public function storeBorrowed(Request $request)
     {
-        // Validate request data (basic checks)
+        // Validate request data
         $validatedData = $request->validate([
             'faculty_id' => 'required|string',
-            'key_id' => 'required|integer',
-            'details' => 'required|string',
+            'key_id'     => 'required|integer',
+            'details'    => 'required|string',
         ]);
 
-        // Check if faculty_id exists in the Faculty model
+        // Check if faculty exists
         $faculty = Faculty::where('faculty_id', $request->faculty_id)->first();
         if (!$faculty) {
             return response()->json([
@@ -32,7 +32,7 @@ class LogsApiController extends Controller
             ], 422);
         }
 
-        // Check if key_id exists in the LabKey model
+        // Check if lab key exists
         $labKey = LabKey::where('key_id', $request->key_id)->first();
         if (!$labKey) {
             return response()->json([
@@ -47,14 +47,17 @@ class LogsApiController extends Controller
             ], 422);
         }
 
-        // Update the status of the key to "borrowed"
+        // Update key status
         $labKey->update(['status' => 'borrowed']);
 
-        // Add the current timestamp for date_time_borrowed in PH Time
-        $validatedData['date_time_borrowed'] = Carbon::now('Asia/Manila');
-
-        // Create and save the log entry
-        $log = Logs::create($validatedData);
+        // Prepare log data
+        $log = Logs::create([
+            'faculty_id_borrowed'   => $request->faculty_id,
+            'faculty_id_returned'   => null,
+            'key_id'                => $request->key_id,
+            'details'               => $request->details,
+            'date_time_borrowed'    => Carbon::now('Asia/Manila'),
+        ]);
 
         return response()->json([
             'message' => 'Log stored successfully!',
@@ -66,28 +69,28 @@ class LogsApiController extends Controller
     {
         // Validate request data
         $validatedData = $request->validate([
-            'faculty_id' => 'required|string',
-            'key_id' => 'required|integer',
+            'faculty_id' => 'required|string', // This is the returning faculty
+            'key_id'     => 'required|integer',
         ]);
 
-        // Find the log entry based on faculty_id and key_id
-        $log = Logs::where('faculty_id', $request->faculty_id)
-            ->where('key_id', $request->key_id)
-            ->whereNull('date_time_returned') // Ensure the key is currently borrowed
+        // Find the active borrowed log using only key_id and return status
+        $log = Logs::where('key_id', $request->key_id)
+            ->whereNull('date_time_returned')
             ->first();
 
         if (!$log) {
             return response()->json([
-                'message' => 'No active borrowed record found for this faculty and key.',
+                'message' => 'No active borrowed record found for this key.',
             ], 404);
         }
 
-        // Automatically set the current timestamp for date_time_returned in PH Time
+        // Update log: return timestamp and returner faculty ID
         $log->update([
-            'date_time_returned' => Carbon::now('Asia/Manila'),
+            'date_time_returned'  => Carbon::now('Asia/Manila'),
+            'faculty_id_returned' => $request->faculty_id,
         ]);
 
-        // Update the status of the key to "available"
+        // Set key status to available
         $labKey = LabKey::where('key_id', $request->key_id)->first();
         if ($labKey) {
             $labKey->update(['status' => 'available']);

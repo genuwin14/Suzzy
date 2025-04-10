@@ -8,7 +8,7 @@
 .col-date { width: 5%; }
 .col-name { width: 25%; }
 .col-lab { width: 10%; }
-.col-details { width: 15%; }
+.col-details { width: 10%; }
 .col-time { width: 10%; }
 
 /* Prevent table and header shrinkage */

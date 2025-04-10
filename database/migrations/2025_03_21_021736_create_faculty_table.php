@@ -10,10 +10,13 @@ return new class extends Migration {
         Schema::create('faculty', function (Blueprint $table) {
             $table->string('faculty_id', 100)->primary();
             $table->string('rfid_uid', 255)->unique()->nullable();
+            $table->integer('pin_code')->nullable();
             $table->string('fname', 45)->nullable();
             $table->string('mname', 45)->nullable();
             $table->string('lname', 45)->nullable();
             $table->string('suffix', 45)->nullable();
+            $table->enum('role_type', ['Faculty', 'Technician'])->default('Faculty'); // 🆕 Added column
+
             $table->timestamps();
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->enum('status', ['Enabled', 'Disabled'])->nullable();

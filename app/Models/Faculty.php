@@ -11,18 +11,20 @@ class Faculty extends Model
 
     protected $table = 'faculty';
     protected $primaryKey = 'faculty_id';
-    public $incrementing = false; // Since faculty_id is a string
+    public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
         'faculty_id',
         'rfid_uid',
+        'pin_code',
         'fname',
         'mname',
         'lname',
         'suffix',
-        'admin_id',  // Added field
-        'status',    // Added field
+        'role_type',  // 🆕 Added field
+        'admin_id',
+        'status',
     ];    
 
     public function logs()

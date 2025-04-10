@@ -15,6 +15,7 @@
             <tr>
                 <th>Faculty ID</th>
                 <th>Name</th>
+                <th>Role</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -23,6 +24,7 @@
             <tr>
                 <td>{{ $member->faculty_id }}</td>
                 <td>{{ $member->fname }} {{ $member->mname }} {{ $member->lname }} {{ $member->suffix }}</td>
+                <td>{{ $member->role_type}}</td>
                 <td>
                     <!-- Toggle Status Button -->
                     <button type="button" class="btn btn-sm {{ $member->status === 'Enabled' ? 'btn-success' : 'btn-danger' }} toggle-status-btn"

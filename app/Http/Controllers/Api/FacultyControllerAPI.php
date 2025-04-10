@@ -17,27 +17,26 @@ class FacultyControllerAPI extends Controller {
         return response()->json(Faculty::find($id));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // Validate request input
         $validatedData = $request->validate([
             'rfid_uid'  => 'required|unique:faculty,rfid_uid',
+            'pin_code'  => 'required|string|max:6',
             'fname'     => 'required|string|max:100',
             'mname'     => 'nullable|string|max:100',
             'lname'     => 'required|string|max:100',
             'suffix'    => 'nullable|string|max:20',
-            'admin_id'  => 'required|exists:admins,admin_id', // Ensure admin_id exists
-            'status'    => 'nullable|string|in:Enabled,Disabled', // Use correct ENUM values
+            'role_type' => 'required|in:Faculty,Technician', // ✅ role_type validation
+            'admin_id'  => 'required|exists:admins,admin_id',
+            'status'    => 'nullable|string|in:Enabled,Disabled',
         ]);
-    
-        // Default status to 'Enabled' if not provided
+
         $validatedData['status'] = $validatedData['status'] ?? 'Enabled';
-    
-        // Generate a unique faculty_id if not provided
         $validatedData['faculty_id'] = $request->faculty_id ?? (string) Str::uuid();
-    
-        // Create the faculty record
+
         $faculty = Faculty::create($validatedData);
-    
+
         return response()->json([
             'message' => 'Faculty member added successfully',
             'faculty' => $faculty

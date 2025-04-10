@@ -13,16 +13,23 @@ class Logs extends Model
     protected $primaryKey = 'log_id';
 
     protected $fillable = [
-        'faculty_id',
+        'faculty_id_borrowed',
+        'faculty_id_returned',
         'key_id',
         'details',
         'date_time_borrowed',
         'date_time_returned',
     ];
 
-    public function faculty()
+    // New relations
+    public function borrowedBy()
     {
-        return $this->belongsTo(Faculty::class, 'faculty_id', 'faculty_id');
+        return $this->belongsTo(Faculty::class, 'faculty_id_borrowed', 'faculty_id');
+    }
+
+    public function returnedBy()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id_returned', 'faculty_id');
     }
 
     public function labKey()

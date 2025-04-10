@@ -64,7 +64,7 @@
                         @forelse ($recentFacultyBorrowed as $log)
                             <li>
                                 <i class="fa-solid fa-user"></i> 
-                                {{ $log->faculty ? $log->faculty->fname . ' ' . $log->faculty->lname : 'Unknown Faculty' }} 
+                                {{ $log->borrowedBy ? $log->borrowedBy->fname . ' ' . $log->borrowedBy->lname : 'Unknown Faculty' }} 
                                 - {{ \Carbon\Carbon::parse($log->date_time_borrowed)->format('M d, Y h:i A') }}
                             </li>
                         @empty
@@ -85,7 +85,7 @@
                             <li>
                                 <i class="fa-solid fa-door-open"></i> 
                                 {{ $log->labKey ? $log->labKey->laboratory : 'Unknown Lab' }} 
-                                ({{ $log->faculty ? $log->faculty->fname . ' ' . $log->faculty->lname : 'Unknown Faculty' }})
+                                ({{ $log->borrowedBy ? $log->borrowedBy->fname . ' ' . $log->borrowedBy->lname : 'Unknown Faculty' }})
                                 - <span class="status">
                                     {{ $log->date_time_returned ? 'Returned' : 'Borrowed' }}
                                 </span>

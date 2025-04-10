@@ -70,25 +70,30 @@ class AdminController extends Controller
         // Count total faculty members
         $facultyCount = Faculty::count();
 
-        // Get the latest 6 faculty members who borrowed keys (without duplicates)
-        $recentFacultyBorrowed = Logs::with('faculty')
-            ->whereNotNull('faculty_id') // Ensure faculty is present
+        // Latest 6 unique faculty members who borrowed
+        $recentFacultyBorrowed = Logs::with('borrowedBy')
+            ->whereNotNull('faculty_id_borrowed')
             ->orderBy('date_time_borrowed', 'desc')
             ->get()
-            ->unique('faculty_id') // Ensure unique faculty members
-            ->take(6); // Get only the first 6 after uniqueness
+            ->unique('faculty_id_borrowed')
+            ->take(6);
 
-        // Get the latest 6 borrowed keys with laboratory details
-        $recentBorrowedKeys = Logs::with(['faculty', 'labKey'])
-            ->whereNotNull('key_id') // Ensure lab key is present
+        // Latest 6 borrowed keys with lab + borrower info
+        $recentBorrowedKeys = Logs::with(['borrowedBy', 'labKey'])
+            ->whereNotNull('key_id')
             ->orderBy('date_time_borrowed', 'desc')
             ->limit(6)
             ->get();
 
-        // Count the number of keys currently borrowed (not yet returned)
+        // Count borrowed keys not returned yet
         $borrowedKeysCount = Logs::whereNull('date_time_returned')->count();
 
-        return view('admin.dashboard', compact('facultyCount', 'recentFacultyBorrowed', 'recentBorrowedKeys', 'borrowedKeysCount'));
+        return view('admin.dashboard', compact(
+            'facultyCount',
+            'recentFacultyBorrowed',
+            'recentBorrowedKeys',
+            'borrowedKeysCount'
+        ));
     }
 
     public function createFaculty()
@@ -148,13 +153,24 @@ class AdminController extends Controller
 
     public function labKeys()
     {
-        // Retrieve all lab keys
         $labKeys = LabKey::all();
 
-        // Group the lab keys by laboratory
+        foreach ($labKeys as $key) {
+            $log = Logs::with('borrowedBy')
+                ->where('key_id', $key->key_id)
+                ->whereNull('date_time_returned')
+                ->latest('date_time_borrowed')
+                ->first();
+
+            if ($log && $log->borrowedBy) {
+                $key->faculty_name = $log->borrowedBy->fname . ' ' . $log->borrowedBy->lname;
+            } else {
+                $key->faculty_name = 'Not borrowed';
+            }
+        }
+
         $groupedLabKeys = $labKeys->groupBy('laboratory');
 
-        // Pass the grouped data to the view
         return view('admin.labkeys', compact('groupedLabKeys'));
     }
 
@@ -193,14 +209,13 @@ class AdminController extends Controller
             return redirect()->route('admin.login')->with('error', 'Access denied.');
         }
 
-        // Retrieve logs with related faculty and key information
-        $logs = Logs::with(['faculty', 'labKey'])->orderBy('date_time_borrowed', 'desc')->get();
+        $logs = Logs::with(['borrowedBy', 'returnedBy', 'labKey'])->orderBy('date_time_borrowed', 'desc')->get();
 
         // Extract unique borrower names
         $borrowerNames = $logs->map(function ($log) {
-            if ($log->faculty) {
-                return trim($log->faculty->fname . ' ' . $log->faculty->mname . ' ' . $log->faculty->lname . ' ' . $log->faculty->suffix);
-            }
+            if ($log->borrowedBy) {
+                return trim($log->borrowedBy->fname . ' ' . $log->borrowedBy->mname . ' ' . $log->borrowedBy->lname . ' ' . $log->borrowedBy->suffix);
+            }            
             return 'Unknown Borrower';
         })->unique()->sort()->values();
 

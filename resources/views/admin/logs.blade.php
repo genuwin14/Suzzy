@@ -43,8 +43,8 @@
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($log->date_time_borrowed)->format('M d, Y') }}</td>
                         <td>
-                            @if ($log->faculty)
-                                {{ $log->faculty->fname }} {{ $log->faculty->mname }} {{ $log->faculty->lname }} {{ $log->faculty->suffix }}
+                            @if ($log->borrowedBy)
+                                {{ $log->borrowedBy->fname }} {{ $log->borrowedBy->mname }} {{ $log->borrowedBy->lname }} {{ $log->borrowedBy->suffix }}
                             @else
                                 Unknown Borrower
                             @endif
@@ -52,7 +52,16 @@
                         <td>{{ $log->labKey ? $log->labKey->laboratory : 'No Laboratory Assigned' }}</td>
                         <td>{{ $log->details ?? 'No Details' }}</td>
                         <td>{{ \Carbon\Carbon::parse($log->date_time_borrowed)->format('h:i A') }}</td>
-                        <td>{{ $log->date_time_returned ? \Carbon\Carbon::parse($log->date_time_returned)->format('h:i A') : 'N/A' }}</td>
+                        <td>
+                            @if ($log->date_time_returned)
+                                {{ \Carbon\Carbon::parse($log->date_time_returned)->format('h:i A') }}
+                                @if ($log->faculty_id_returned !== $log->faculty_id_borrowed && $log->returnedBy)
+                                    ({{ $log->returnedBy->fname }} {{ $log->returnedBy->mname }} {{ $log->returnedBy->lname }})
+                                @endif
+                            @else
+                                N/A
+                            @endif
+                        </td>
                         <td></td>
                     </tr>
                     @empty
@@ -207,9 +216,9 @@
                     0: { cellWidth: 30 },  
                     1: { cellWidth: 80 }, 
                     2: { cellWidth: 33 }, 
-                    3: { cellWidth: 60 }, 
+                    3: { cellWidth: 50 }, 
                     4: { cellWidth: 40 }, 
-                    5: { cellWidth: 40 } 
+                    5: { cellWidth: 50 } 
                 },
                 headStyles: { 
                     fontSize: 11, 
